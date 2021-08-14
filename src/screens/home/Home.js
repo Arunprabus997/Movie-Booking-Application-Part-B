@@ -17,7 +17,6 @@ import Checkbox from "@material-ui/core/Checkbox";
 import ListItemText from "@material-ui/core/ListItemText";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
@@ -47,7 +46,6 @@ const styles = (theme) => ({
     color: theme.palette.primary.light,
   },
 });
-
 class Home extends Component {
   constructor() {
     super();
@@ -63,10 +61,8 @@ class Home extends Component {
       releaseDateEnd: "",
     };
   }
-
   componentWillMount() {
     // Get upcoming movies
-
     fetch(
       "http://localhost:8085/api/v1/movies?page=1&limit=10&status=published",
       { method: "GET" }
@@ -77,9 +73,7 @@ class Home extends Component {
           upcomingMovies: data.movies,
         });
       });
-
     // Get released movies
-
     fetch(
       "http://localhost:8085/api/v1/movies?page=1&limit=10&status=Released",
       { method: "GET" }
@@ -90,9 +84,7 @@ class Home extends Component {
           releasedMovies: data.movies,
         });
       });
-
     // Get filters
-
     fetch("http://localhost:8085/api/v1/genres", { method: "GET" })
       .then((response) => response.json())
       .then((data) => {
@@ -100,9 +92,7 @@ class Home extends Component {
           genresList: data.genres,
         });
       });
-
     // Get artists
-
     fetch("http://localhost:8085/api/v1/artists?page=1&limit=10", {
       method: "GET",
     })
@@ -113,31 +103,24 @@ class Home extends Component {
         });
       });
   }
-
   movieNameChangeHandler = (event) => {
     this.setState({ movieName: event.target.value });
   };
-
   genreSelectHandler = (event) => {
     this.setState({ genres: event.target.value });
   };
-
   artistSelectHandler = (event) => {
     this.setState({ artists: event.target.value });
   };
-
   releaseDateStartHandler = (event) => {
     this.setState({ releaseDateStart: event.target.value });
   };
-
   releaseDateEndHandler = (event) => {
     this.setState({ releaseDateEnd: event.target.value });
   };
-
   movieClickHandler = (movieId) => {
     this.props.history.push("/movie/" + movieId);
   };
-
   filterApplyHandler = () => {
     let queryString = "&status=Released";
     if (this.state.movieName !== "") {
@@ -155,7 +138,6 @@ class Home extends Component {
     if (this.state.releaseDateEnd !== "") {
       queryString += "&end_date=" + this.state.releaseDateEnd;
     }
-
     fetch( "http://localhost:8085/api/v1/movies?page=1&limit=10" +
     encodeURI(queryString), {
       method: "GET",
@@ -166,19 +148,16 @@ class Home extends Component {
             releasedMovies: data.movies,
         });
       });
-
+  
   };
-
   render() {
     const { classes } = this.props;
     return (
       <div>
         <Header baseUrl={this.props.baseUrl} />
-
         <div className={classes.upcomingMoviesHeading}>
           <span>Upcoming Movies</span>
         </div>
-
         <GridList cols={5} className={classes.gridListUpcomingMovies}>
           {this.state.upcomingMovies.map((movie) => (
             <GridListTile key={"upcoming" + movie.id}>
@@ -191,7 +170,6 @@ class Home extends Component {
             </GridListTile>
           ))}
         </GridList>
-
         <div className="flex-container">
           <div className="left">
             <GridList
@@ -231,7 +209,6 @@ class Home extends Component {
                     FIND MOVIES BY:
                   </Typography>
                 </FormControl>
-
                 <FormControl className={classes.formControl}>
                   <InputLabel htmlFor="movieName">Movie Name</InputLabel>
                   <Input
@@ -239,7 +216,6 @@ class Home extends Component {
                     onChange={this.movieNameChangeHandler}
                   />
                 </FormControl>
-
                 <FormControl className={classes.formControl}>
                   <InputLabel htmlFor="select-multiple-checkbox">
                     Genres
@@ -261,7 +237,6 @@ class Home extends Component {
                     ))}
                   </Select>
                 </FormControl>
-
                 <FormControl className={classes.formControl}>
                   <InputLabel htmlFor="select-multiple-checkbox">
                     Artists
@@ -292,7 +267,6 @@ class Home extends Component {
                     ))}
                   </Select>
                 </FormControl>
-
                 <FormControl className={classes.formControl}>
                   <TextField
                     id="releaseDateStart"
@@ -303,7 +277,6 @@ class Home extends Component {
                     onChange={this.releaseDateStartHandler}
                   />
                 </FormControl>
-
                 <FormControl className={classes.formControl}>
                   <TextField
                     id="releaseDateEnd"

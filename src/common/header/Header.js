@@ -12,7 +12,6 @@ import Input from "@material-ui/core/Input";
 import PropTypes from "prop-types";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import { Link } from "react-router-dom";
-
 const customStyles = {
   content: {
     top: "50%",
@@ -33,7 +32,6 @@ const TabContainer = function (props) {
 TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
 class Header extends Component {
   constructor() {
     super();
@@ -58,7 +56,6 @@ class Header extends Component {
       loggedIn: sessionStorage.getItem("access-token") == null ? false : true,
     };
   }
-
   openModalHandler = () => {
     this.setState({
       modalIsOpen: true,
@@ -92,7 +89,6 @@ class Header extends Component {
     this.state.loginPassword === ""
       ? this.setState({ loginPasswordRequired: "dispBlock" })
       : this.setState({ loginPasswordRequired: "dispNone" });
-
     let dataLogin = null;
     let xhrLogin = new XMLHttpRequest();
     let that = this;
@@ -103,15 +99,12 @@ class Header extends Component {
           "access-token",
           xhrLogin.getResponseHeader("access-token")
         );
-
         that.setState({
           loggedIn: true,
         });
-
         that.closeModalHandler();
       }
     });
-
     xhrLogin.open("POST", this.props.baseUrl + "auth/login");
     xhrLogin.setRequestHeader(
       "Authorization",
@@ -122,7 +115,6 @@ class Header extends Component {
     xhrLogin.setRequestHeader("Cache-Control", "no-cache");
     xhrLogin.send(dataLogin);
   };
-
   inputUsernameChangeHandler = (e) => {
     this.setState({ username: e.target.value });
   };
@@ -154,7 +146,7 @@ class Header extends Component {
     };
     const requestOptions = {
       method: "POST",
-
+      
       body: JSON.stringify(registerPayload),
     };
     fetch("http://localhost:8085/api/v1/signup/", requestOptions)
@@ -165,7 +157,6 @@ class Header extends Component {
         })
       );
   };
-
   inputFirstNameChangeHandler = (e) => {
     this.setState({ firstname: e.target.value });
   };
@@ -181,16 +172,13 @@ class Header extends Component {
   inputContactChangeHandler = (e) => {
     this.setState({ contact: e.target.value });
   };
-
   logoutHandler = (e) => {
     sessionStorage.removeItem("uuid");
     sessionStorage.removeItem("access-token");
-
     this.setState({
       loggedIn: false,
     });
   };
-
   render() {
     return (
       <div>
@@ -230,7 +218,6 @@ class Header extends Component {
           ) : (
             ""
           )}
-
           {this.props.showBookShowButton === "true" && this.state.loggedIn ? (
             <div className="bookshow-button">
               <Link to={"/bookshow/" + this.props.id}>
@@ -399,4 +386,5 @@ class Header extends Component {
     );
   }
 }
+
 export default Header;
