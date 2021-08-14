@@ -29,6 +29,5 @@
   }
 
   @keyframes tt {
-  from { 
-    transform: scaleX(-1); }
+  from { transform: scaleX(-1); }
   }
